@@ -1,4 +1,4 @@
-* {
+/* * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -8,13 +8,12 @@
         background-repeat: no-repeat;
         background-attachment: fixed;
         background-size: cover;
-        background-color: black;
         padding: 0;
         display: flex;
         justify-content: center;
         align-items: center; 
-        height: 100vh;
-      }
+        height: 120vh;
+      } */
       input[type="file"] {
         margin-top: 0;
         display: block;
@@ -25,7 +24,7 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        background-color: #fff;
+        /* background-color: blue; */
         padding: 20px;
         border-radius: 5px;
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 //import { useHistory } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
-import { NavLink } from "react-router-dom"
+import { NavLink} from "react-router-dom"
 //import Alert from 'react-bootstrap/Alert';
 import Form from 'react-bootstrap/Form';
 import './contact.css';
@@ -54,6 +54,7 @@ const Contact = () =>  {
             mobilenumber: '',
             message: ''
         });
+        window.location.pathname = "/Register";
         //history.push('/Register');
         //setSelectedImage(null);
         //setShow(true);
@@ -128,9 +129,12 @@ const Contact = () =>  {
                     <Button variant="primary" type="submit" ><NavLink to="/Register" onClick={sendEmail}>Send</NavLink></Button>
                 </div> */}
                 {/* <Button variant="primary"onClick={sendEmail}><NavLink to="/Register">Send</NavLink></Button> */}
-                <Button variant="primary" type="submit" onClick={sendEmail}>
+                {/* <Button variant="primary" type="submit" onClick={sendEmail}>
                     Send
-                </Button>
+                </Button> */}
+                 <div className='text-end'>
+          <Button variant="primary" onClick={sendEmail}><NavLink to="/Register" className="text-decoration-none text-light">Next</NavLink></Button>
+        </div>
                 <p>If you want to see the profile page, click here: <NavLink to="/Profile">Profile</NavLink></p>
             </form>
         </div>

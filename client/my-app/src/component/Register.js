@@ -1,54 +1,63 @@
-
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useContext, useState, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
 import { NavLink } from 'react-router-dom';
-import moment from 'moment';
-import { fetchUserData } from '../redux/action'; // Import the action creator
+import { LoginContext } from './context';
+import Form from 'react-bootstrap/Form';
+import { useDispatch } from 'react-redux';
+import { showUser } from '../redux/action';
 
-const Register = () => {
-  const [data, setData] = useState([]);
+const Register = ({ userData }) => {
+  const { logindata } = useContext(LoginContext);
+  const [file, setFile] = useState("");
+  const [imagePreview, setImagePreview] = useState(null);
   const dispatch = useDispatch();
-  const userData = useSelector(state => state.userData); // Assuming you have a reducer for user data
 
   useEffect(() => {
-    // Dispatch action to fetch user data when component mounts
-    dispatch(fetchUserData());
-  }, [dispatch]);
+    dispatch(showUser());
+  }, [dispatch]); // Corrected dependency array
 
-  useEffect(() => {
-    // Update component state when user data changes
-    setData(userData);
-  }, [userData]);
+  const setimgfile = (e) => {
+    const selectedFile = e.target.files[0];
+    setFile(selectedFile);
+
+    // Read the selected file and display its preview
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setImagePreview(reader.result);
+    };
+    reader.readAsDataURL(selectedFile);
+  }
+
+  const addUserData = async (e) => {
+    e.preventDefault();
+    var formData = new FormData();
+    formData.append("photo", file);
+  }
 
   return (
-    <>
-      <div className='container mt-2'>
+    <div className="container mt-3">
+      <Form className='mt-3'>
+        {userData && (
+          <div>
+            <p>User Name: {logindata ? logindata.ValidUserOne.name : ""}</p>
+            <p>User Email: {logindata ? logindata.ValidUserOne.email : ""}</p>
+          </div>
+        )}
+        {imagePreview && (
+          <img src={imagePreview} alt="Selected" style={{ width: '100px', height: '100px' }} />
+        )}
+        <Form.Group className="mb-3" controlId="formBasicPassword">
+          <Form.Label>Select Your Image</Form.Label>
+          <Form.Control type="file" onChange={setimgfile} name='photo' placeholder="" />
+        </Form.Group>
         <div className='text-end'>
-          <Button variant="primary"><NavLink to="/" className="text-decoration-none text-light">Add User</NavLink></Button>
+          <Button variant="primary" type="submit" onClick={addUserData}>
+            <NavLink to="/Profile" className="text-decoration-none text-light">Submit</NavLink>
+          </Button>
         </div>
-
-        <div className='row d-flex justify-content-between align-iteams-center mt-5'>
-          {data.length > 0 ? (
-            data.map((el, i) => (
-              <Card key={el._id} style={{ width: '22rem', height: '18rem' }} className="mb-3">
-                <Card.Img variant="top" style={{ width: '100px', textAlign: 'center', margin: 'auto' }} src={`/uploads/${el.imgpath}`} className='mt-2' />
-                <Card.Body className='text-center'>
-                  <Card.Title>User Name : {el.name}</Card.Title>
-                  <Card.Title>User Email ID : {el.email}</Card.Title>
-                  <Card.Text>Date Added: {moment(el.date).format('L')}</Card.Text> 
-                </Card.Body>
-              </Card>
-            ))
-          ) : (
-            <p>No users found.</p>
-          )}
-        </div>
-      </div>
-    </>
+      </Form>
+    </div>
   );
 }
 
 export default Register;
-

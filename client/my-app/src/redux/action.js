@@ -95,7 +95,8 @@ export const fetchUserData = (userData) => {
   return async (dispatch) => {
     dispatch({ type: FETCH_USER_DATA_REQUEST });
     try {
-      const response = await fetch("http://localhost:3000/contact", {
+      // const response = await fetch("http://localhost:3000/contact", {
+        const response = await fetch("localhost:3000/contact/Profile", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

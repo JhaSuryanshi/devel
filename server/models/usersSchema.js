@@ -7,7 +7,7 @@ const keysecret = process.env.SECRET_KEY;
 const usersSchema = new mongoose.Schema({
     imgpath:{
         type:String,
-        required:true
+        //required:true
     },
     date:{
         type:Date

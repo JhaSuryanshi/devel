@@ -57,5 +57,14 @@ router.post("/Register",upload.single("photo"),async(req,res)=>{
     }
 });
 
+router.get("/contact/Profile:email",async(req,res)=>{
+    try {
+        const email = req.body.email;
+        const getUser = await users.findOne({ email });
+        res.status(201).json({status:201,getUser})
+    } catch (error) {
+        res.status(401).json({status:401,error})
+    }
+});
 
 module.exports = router;
