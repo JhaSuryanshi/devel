@@ -63,26 +63,37 @@ import { fetchUserData } from '../redux/action';
 const Profile = () => {
   const dispatch = useDispatch();
   const userData = useSelector(state => state.users);
+  const userlogout = ()=>{
+    localStorage.removeItem("user_login")
+    window.location.pathname = "/";
+}
 
   useEffect(() => {
     dispatch(fetchUserData()); 
   }, [dispatch]);
 
   return (
-    <div className="container mt-3">
-       <Button variant="primary" >
-            <NavLink to="/" className="text-decoration-none text-light">Add User</NavLink>
-          </Button>
+    <div className="container mt-3"  style={{ padding: '10px 20px' }}>
+      <div className="left-button">
+        <Button variant="primary"  style={{order: '1' }}>
+          <NavLink to="/" className="text-decoration-none text-light">Add User</NavLink>
+        </Button>
+      </div>
+      <div className="right-button"  style={{order: '2'}}>
+        <Button variant="primary" onClick={userlogout}>
+          LogOut
+        </Button>
+      </div>
       <h2>User Profile</h2>
       {userData.length > 0 ? (
         userData.map((user) => (
           <div key={user._id} className="mb-3">
             <img src={`/uploads/${user.imgpath}`} alt="User" style={{ width: '100px', height: '100px' }} />
-            <p>Name: {user.name}</p>
-            <p>Email:{user.email}</p>
-            <p>Mobile Number:{user.mobilenumber}</p>
-            <p>Message: {user.message}</p>
-            <p>Date:{moment(user.date).format('MMMM Do YYYY, h:mm:ss a')}</p>
+            <b>Name: {user.name}</b>
+            <b>Email:{user.email}</b>
+            <b>Mobile Number:{user.mobilenumber}</b>
+            <b>Message: {user.message}</b>
+            <b>Date:{moment(user.date).format('MMMM Do YYYY, h:mm:ss a')}</b>
           </div>
         ))
       ) : (

@@ -14,13 +14,13 @@ const Register = ({ userData }) => {
 
   useEffect(() => {
     dispatch(showUser());
-  }, [dispatch]); // Corrected dependency array
+  }, [dispatch]); 
 
   const setimgfile = (e) => {
     const selectedFile = e.target.files[0];
     setFile(selectedFile);
 
-    // Read the selected file and display its preview
+    
     const reader = new FileReader();
     reader.onloadend = () => {
       setImagePreview(reader.result);
@@ -32,7 +32,16 @@ const Register = ({ userData }) => {
     e.preventDefault();
     var formData = new FormData();
     formData.append("photo", file);
+    window.location.pathname = "/Profile";
+    //const res = await axios.post("/register", formData, config);
+
+    // if (res.data.status === 401 || !res.data) {
+    //   console.log("errror")
+    // } else {
+    //   history("/Profile")
+    // }
   }
+  
 
   return (
     <div className="container mt-3">
